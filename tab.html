@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-app="myApp" ng-controller="myController">
+    <section>
+        <ul>
+            <li>
+                <a href ng-click="change_Tab_Hoc_Sinh()">Hoc Sinh</a>
+            </li>
+            <li>
+                <a href ng-click="change_Tab_Lop()">Lop</a>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <div ng-show="main">
+            <input type="text" placeholder="Ho ten" ng-model="inputData.hoTen">
+            <input type="number" placeholder="Tuoi" ng-model="inputData.tuoi">
+            <select ng-model="inputData.lop">
+                <option ng-repeat="lop in lop">{{lop}}</option>
+            </select>
+            <button ng-click="applySearch()">Tim kiem</button>
+            <button ng-click="add()">Them hoc sinh</button>
+            <table border="1" width="700px">
+                <tr>
+                    <td>#</td>
+                    <td>Ho va ten</td>
+                    <td>Tuoi</td>
+                    <td>Lop</td>
+                    <td>Thao tac</td>
+                </tr>
+                <tr ng-repeat="hs in hocSinh | filter: data">
+                    <td>{{$index + 1}}</td>
+                    <td width=40%>{{hs.hoTen}}</td>
+                    <td>{{hs.tuoi}}</td>
+                    <td>{{hs.lop}}</td>
+                    <td align="center" width="100px">
+                        <button ng-click="edit(hs)">Sua</button>
+                        <button ng-click="delete(hs)">Xoa</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-hide="change_Main_Add">
+            <h1>Them hoc sinh</h1>
+            <input type="text" placeholder="Ho ten" ng-model="hoTen"><br>
+            <input style="width : 165px" type="date" ng-model="tuoi"><br>
+            <select ng-model="lop">
+                <option ng-repeat="lop in hocSinh">{{lop.lop}}</option>
+            </select>
+            <button ng-click="saveAdd(hoTen, tuoi, lop)">Luu</button>
+        </div>
+        <div ng-hide="change_Main_Edit">
+            <h1>Sua hoc sinh</h1>
+            <input type="text" ng-model="hs.hoTen"><br>
+            <input type="number" ng-model="hs.tuoi"><br>
+            <select ng-model="hs.lop">
+                <option ng-repeat="lop in hocSinh">{{lop.lop}}</option>
+            </select>
+            <button ng-click="saveEdit()">Luu</button>
+        </div>
+    </section>
+    
+</body>
+
+</html>
